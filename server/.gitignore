@@ -68,6 +68,10 @@ ScaffoldingReadMe.txt
 # StyleCop
 StyleCopReport.xml
 
+# Static files
+Web/wwwroot/images/*
+!Web/wwwroot/images/
+
 # Files built by Visual Studio
 *_i.c
 *_p.c
