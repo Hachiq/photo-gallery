@@ -27,4 +27,15 @@ export class AuthService {
       }
     );
   }
+
+  logout() {
+    localStorage?.removeItem(CONFIGURATION.auth.tokenKey);
+  }
+
+
+  isAuthenticated() {
+    const isLocalStorageAvailable = typeof window !== 'undefined' && window.localStorage;
+    const token = isLocalStorageAvailable ? localStorage?.getItem(CONFIGURATION.auth.tokenKey) : '';
+    return !!token;
+  }
 }

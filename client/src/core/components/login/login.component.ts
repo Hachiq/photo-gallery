@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { CONFIGURATION } from '../../configuration/config';
 
 @Component({
   selector: 'app-login',
@@ -27,7 +28,7 @@ export class LoginComponent {
 
     this.authService.login(data).subscribe({
       next: (response) => {
-        localStorage.setItem('token', response);
+        localStorage?.setItem(CONFIGURATION.auth.tokenKey, response);
         this.router.navigate(['albums']);
       },
       error: (error) => {

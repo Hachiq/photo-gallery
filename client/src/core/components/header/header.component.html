@@ -5,13 +5,16 @@
   <div class="nav-item">
     <a routerLink="my-albums" class="nav-link">My Albums</a>
   </div>
-  <div class="nav-item">
-    <a routerLink="login" class="nav-link">Log In</a>
-  </div>
-  <div class="nav-item">
-    <a routerLink="register" class="nav-link">Sign Up</a>
-  </div>
-  <div class="nav-item">
-    <a routerLink="my-albums" class="nav-link">User</a>
-  </div>
+  @if (!authService.isAuthenticated()) {
+    <div class="nav-item">
+      <a routerLink="login" class="nav-link">Log In</a>
+    </div>
+    <div class="nav-item">
+      <a routerLink="register" class="nav-link">Sign Up</a>
+    </div>
+  } @else {
+    <div class="nav-item">
+      <a (click)="logout()" class="nav-link">Log out</a>
+    </div>
+  }
 </nav>
