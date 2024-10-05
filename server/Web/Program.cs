@@ -1,27 +1,29 @@
-namespace Web
+using Data;
+
+namespace Web;
+
+public class Program
 {
-    public class Program
+    public static void Main(string[] args)
     {
-        public static void Main(string[] args)
-        {
-            var builder = WebApplication.CreateBuilder(args);
+        var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+        // Add services to the container.
 
-            builder.Services.AddControllers();
+        builder.Services.AddDataServices(builder.Configuration);
+        builder.Services.AddPresentationServices();
 
-            var app = builder.Build();
+        var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
+        // Configure the HTTP request pipeline.
 
-            app.UseHttpsRedirection();
+        app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+        app.UseAuthorization();
 
 
-            app.MapControllers();
+        app.MapControllers();
 
-            app.Run();
-        }
+        app.Run();
     }
 }
