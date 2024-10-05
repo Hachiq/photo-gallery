@@ -15,8 +15,9 @@ public class TokenGenerator(IOptions<JwtSettings> jwtOptions) : ITokenGenerator
     {
         var claims = new List<Claim>
         {
-            new("id", user.Id.ToString()),
-            new(JwtRegisteredClaimNames.Name, user.Username.ToString())
+            new(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new(ClaimTypes.Name, user.Username.ToString()),
+            new(ClaimTypes.Role, user.Role.ToString())
         };
 
         var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_jwtSettings.Secret));
