@@ -17,6 +17,8 @@ public class Program
 
         // Configure the HTTP request pipeline.
 
+        app.UseCors("NgOrigins");
+
         app.UseHttpsRedirection();
 
         app.UseAuthorization();
