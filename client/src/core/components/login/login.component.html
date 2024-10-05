@@ -1,1 +1,19 @@
-<p>login works!</p>
+<div class="content-center">
+  <form [formGroup]="form" (ngSubmit)="login()" class="form">
+    <div class="form-header">Log in</div>
+    <div class="input-group">
+      <input type="text" id="username" placeholder="Username" formControlName="username">
+      @if (form.invalid && form.touched) {
+        <div class="input-error">
+          @if (form.hasError('invalid')) {
+            <span>Wrong username or password</span>
+          }
+        </div>
+      }
+    </div>
+    <div class="input-group">
+      <input type="password" id="password" placeholder="Password" formControlName="password">
+    </div>
+    <button type="submit" class="btn btn-submit" [disabled]="form.invalid">Login</button>
+  </form>
+</div>
