@@ -11,4 +11,5 @@ export const routes: Routes = [
   { path: 'album/:id', component: AlbumViewComponent },
   { path: 'albums', component: AlbumsTableComponent },
   { path: 'my-albums', component: MyAlbumsComponent }, // TODO: Consider renaming the route
+  { path: '', component: AlbumsTableComponent },
 ];

@@ -1,1 +1,133 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --warning: #D9534F;
+  --primary: #17A2B8;
+  --header: #0D1117;
+  --background: #201F31;
+  --text: #fff;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 18px;
+  color: var(--text);
+  background-color: var(--background);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background: var(--header);
+  height: 90px;
+  font-size: 24px;
+
+  .nav-item {
+    padding: 1rem;
+
+    a {
+      text-decoration: none;
+      color: var(--text);
+
+      &:hover {
+        color: var(--primary);
+      }
+    }
+
+    &:nth-child(3) {
+      margin-left: auto;
+    }
+  }
+}
+
+.btn {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  outline: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.content-center {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  height: 70vh;
+}
+
+.form-header {
+  font-size: 40px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--primary);
+}
+
+.form {
+  background-color: var(--header);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid;
+  border-radius: 4px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s;
+  box-sizing: border-box;
+}
+
+.input-group input:focus {
+  border-color: var(--primary);
+}
+
+.input-error {
+  margin-top: 5px;
+  color: var(--warning);
+  font-size: 14px;
+}
+
+.input-error span {
+  letter-spacing: 1px;
+  display: block;
+}
+
+.btn-submit {
+  color: var(--header);
+  background-color: var(--primary);
+  padding: .5rem;
+  border-radius: 4px;
+  width: 100%;
+
+  &:disabled {
+    opacity: .6;
+
+    &:hover {
+      cursor: unset;
+    }
+  }
+}
