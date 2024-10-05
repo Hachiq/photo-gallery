@@ -32,10 +32,13 @@ export class AuthService {
     localStorage?.removeItem(CONFIGURATION.auth.tokenKey);
   }
 
+  getToken() {
+    return localStorage.getItem(CONFIGURATION.auth.tokenKey);
+  }
 
   isAuthenticated() {
     const isLocalStorageAvailable = typeof window !== 'undefined' && window.localStorage;
-    const token = isLocalStorageAvailable ? localStorage?.getItem(CONFIGURATION.auth.tokenKey) : '';
+    const token = isLocalStorageAvailable ? this.getToken() : '';
     return !!token;
   }
 }
