@@ -13,7 +13,19 @@ public class Repository(AppDbContext _context) : IRepository
         return await _context.Set<T>().ToListAsync();
     }
 
-    public async Task<T?> GetByIdAsync<T>(Guid id) where T : class
+    public async Task<IEnumerable<T>> GetAllAsync<T>(Expression<Func<T, bool>> predicate) where T : class
+    {
+        if (predicate != null)
+        {
+            return await _context.Set<T>().Where(predicate).ToListAsync();
+        }
+        else
+        {
+            return await _context.Set<T>().ToListAsync();
+        }
+    }
+
+    public async Task<T?> GetByIdAsync<T>(long id) where T : class
     {
         return await _context.Set<T>().FindAsync(id);
     }

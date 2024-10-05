@@ -15,6 +15,7 @@ public static class DependencyInjection
         services.AddTokenGenerator();
         services.AddRepository();
         services.AddPasswordService();
+        services.AddAlbumService();
 
         return services;
     }
@@ -47,6 +48,12 @@ public static class DependencyInjection
     private static IServiceCollection AddPasswordService(this IServiceCollection services)
     {
         services.AddScoped<IPasswordService, PasswordService>();
+        return services;
+    }
+
+    private static IServiceCollection AddAlbumService(this IServiceCollection services)
+    {
+        services.AddScoped<IAlbumService, AlbumService>();
         return services;
     }
 }
