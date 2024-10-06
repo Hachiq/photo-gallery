@@ -1,6 +1,7 @@
 ﻿using Core.Contracts;
 using Core.Exceptions;
 using Core.Requests;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,6 +33,7 @@ namespace Web.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost("create")]
         public async Task<IActionResult> CreateAlbum(CreateAlbumRequest request)
         {
