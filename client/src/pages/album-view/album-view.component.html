@@ -24,8 +24,12 @@
     }
   </div>
   <div class="pagination-controls">
-    <i class="arrow left"></i>
-    <span>Page {{ 1 }} of {{ 10 }}</span>
-    <i class="arrow right"></i>
+    <button class="btn" (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">
+      <i class="arrow left"></i>
+    </button>
+    <span>Page {{ currentPage }} of {{ totalPages() }}</span>
+    <button class="btn" (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages()">
+      <i class="arrow right"></i>
+    </button>
   </div>
 </div>

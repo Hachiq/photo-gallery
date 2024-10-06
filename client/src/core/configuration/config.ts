@@ -4,9 +4,11 @@ export const CONFIGURATION = {
     tokenKey: 'token'
   },
   album : {
-    url: 'api/albums'
+    url: 'api/albums',
+    pageSize: 5
   },
   image : {
-    url: 'api/images'
+    url: 'api/images',
+    pageSize: 5
   }
 };

@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Image } from '../models/image';
 import { AddImageRequest } from '../models/add-image.request';
+import { Paged } from '../models/paged.response';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,8 @@ export class ImageService {
 
   http = inject(HttpClient);
 
-  getImages(albumId: number) : Observable<Image[]> {
-    return this.http.get<Image[]>(`${this.baseUrl}?albumId=${albumId}`);
+  getImages(albumId: number, page: number) : Observable<Paged<Image>> {
+    return this.http.get<Paged<Image>>(`${this.baseUrl}?albumId=${albumId}&page=${page}`);
   }
 
   addImage(request: AddImageRequest) {

@@ -4,6 +4,7 @@ import { Image } from '../../models/image';
 import { ImageService } from '../../services/image.service';
 import { AddImageRequest } from '../../models/add-image.request';
 import { environment } from '../../environments/environment';
+import { CONFIGURATION } from '../../core/configuration/config';
 
 @Component({
   selector: 'app-album-view',
@@ -15,6 +16,9 @@ import { environment } from '../../environments/environment';
 export class AlbumViewComponent implements OnInit {
   images: Image[] = [];
   baseUrl = environment.apiUrl;
+
+  currentPage: number = 1;
+  totalRecords: number = 0;
 
   selectedFile: File | null = null;
   selectedFileUrl?: string | ArrayBuffer | null;
@@ -64,16 +68,27 @@ export class AlbumViewComponent implements OnInit {
 
     this.imageService.addImage(data).subscribe({
       next: () => {
+        this.currentPage = 1;
         this.clearSelectedFile();
         this.fetch();
       }
     });
   }
 
+  onPageChange(page: number) {
+    this.currentPage = page;
+    this.fetch();
+  }
+
+  totalPages(): number {
+    return Math.ceil(this.totalRecords / CONFIGURATION.image.pageSize);
+  }
+
   fetch() {
-    this.imageService.getImages(this.albumId).subscribe({
+    this.imageService.getImages(this.albumId, this.currentPage).subscribe({
       next: (response) => {
-        this.images = response;
+        this.images = response.list;
+        this.totalRecords = response.totalRecords;
       }
     });
   }

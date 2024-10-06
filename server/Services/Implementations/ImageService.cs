@@ -1,4 +1,4 @@
-﻿using Azure.Core;
+﻿using Core.Constants;
 using Core.Contracts;
 using Core.Entities;
 using Core.Exceptions;
@@ -9,11 +9,16 @@ namespace Services.Implementations;
 
 class ImageService(IRepository _db) : IImageService
 {
-    public async Task<IEnumerable<Image>> GetByAlbumIdAsync(int albumId)
+    public async Task<PagedResponse<Image>> GetByAlbumIdAsync(int albumId, int page)
     {
         var images = await _db.GetAllAsync<Image>(i => i.AlbumId == albumId);
-        var orderedImages = images.OrderByDescending(i => i.UploadedAt);
-        return orderedImages;
+        var orderedImages = images.OrderByDescending(i => i.UploadedAt)
+                                  .Skip((page - 1) * Common.PageSize)
+                                  .Take(5);
+
+        var totalRecords = images.Count();
+
+        return new PagedResponse<Image>(orderedImages, totalRecords);
     }
 
     public async Task<Image> GetFirstAsync(int albumId)

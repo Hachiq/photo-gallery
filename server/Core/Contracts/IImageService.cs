@@ -6,7 +6,7 @@ namespace Core.Contracts;
 
 public interface IImageService
 {
-    Task<IEnumerable<Image>> GetByAlbumIdAsync(int albumId);
+    Task<PagedResponse<Image>> GetByAlbumIdAsync(int albumId, int page);
     Task<Image> GetFirstAsync(int albumId);
     Task AddAsync(AddImageRequest model);
     Task DeleteAsync(int id);

@@ -14,9 +14,9 @@ namespace Web.Controllers
         ILogger<ImagesController> _logger) : ControllerBase
     {
         [HttpGet]
-        public async Task<IActionResult> GetByAlbum([FromQuery] int albumId)
+        public async Task<IActionResult> GetByAlbum([FromQuery] int albumId, [FromQuery] int page)
         {
-            var response = await _imageService.GetByAlbumIdAsync(albumId);
+            var response = await _imageService.GetByAlbumIdAsync(albumId, page);
             return Ok(response);
         }
 
