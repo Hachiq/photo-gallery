@@ -1,14 +1,14 @@
-<div class="album-item">
-    <div class="image-item">
-      @if (image) {
-        <img [src]="baseUrl + '/' + image.relativePath" alt="Image {{ index }}">
+<div class="album-item" [routerLink]="['/album', item.id]">
+  <div class="image-item">
+    @if (image) {
+      <img [src]="baseUrl + '/' + image.relativePath" alt="Image {{ index }}">
+    }
+    <div class="title">
+      {{ item.title }}
+      @if (!image) {
+        <span>(empty)</span>
       }
-      <div class="title">
-        {{ item.title }}
-        @if (!image) {
-          <span>(empty)</span>
-        }
-      </div>
     </div>
+  </div>
   <div class="backdrop-item"></div>
 </div>

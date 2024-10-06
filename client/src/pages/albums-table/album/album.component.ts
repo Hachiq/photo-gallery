@@ -3,11 +3,12 @@ import { environment } from '../../../environments/environment';
 import { Album } from '../../../models/album';
 import { ImageService } from '../../../services/image.service';
 import { Image } from '../../../models/image';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-album',
   standalone: true,
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './album.component.html',
   styleUrl: './album.component.scss'
 })
