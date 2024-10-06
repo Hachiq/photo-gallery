@@ -1,20 +1,33 @@
-﻿using Core.Contracts;
+﻿using Core.Constants;
+using Core.Contracts;
 using Core.Entities;
 using Core.Exceptions;
 using Core.Requests;
+using Core.Responses;
 
 namespace Services.Implementations;
 
 class AlbumService(IRepository _db) : IAlbumService
 {
-    public async Task<IEnumerable<Album>> GetAlbumsAsync()
+    public async Task<PagedResponse<Album>> GetAlbumsAsync(int page)
     {
-        return await _db.GetAllAsync<Album>();
+        var albums = await _db.GetAllAsync<Album>();
+        var orderedAlbums = albums.OrderByDescending(a => a.CreatedAt)
+                                  .Skip((page - 1) * Common.PageSize)
+                                  .Take(5);
+        var totalRecords = albums.Count();
+        return new PagedResponse<Album>(orderedAlbums, totalRecords);
     }
 
-    public async Task<IEnumerable<Album>> GetAlbumsAsync(int userId)
+    public async Task<PagedResponse<Album>> GetAlbumsAsync(int page, int userId)
     {
-        return await _db.GetAllAsync<Album>(a => a.UserId == userId);
+        var albums = await _db.GetAllAsync<Album>(a => a.UserId == userId);
+        var orderedAlbums = albums.OrderByDescending(a => a.CreatedAt)
+                                  .Skip((page - 1) * Common.PageSize)
+                                  .Take(5);
+
+        var totalRecords = albums.Count();
+        return new PagedResponse<Album>(orderedAlbums, totalRecords);
     }
 
     public async Task<Album> GetAlbumAsync(int albumId)

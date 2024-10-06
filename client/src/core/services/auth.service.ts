@@ -4,6 +4,7 @@ import { LoginRequest } from '../models/login.request';
 import { environment } from '../../environments/environment';
 import { CONFIGURATION } from '../configuration/config';
 import { RegisterRequest } from '../models/register.request';
+import { Helpers } from '../../services/helpers';
 
 @Injectable({
   providedIn: 'root'
@@ -40,5 +41,11 @@ export class AuthService {
 
   isAuthenticated() {
     return !!this.getToken();
+  }
+
+  getUserId() {
+    const token = this.getToken() ?? '';
+    const decodedJwt = Helpers.decodeJwt(token);
+    return parseInt(decodedJwt?.payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
   }
 }

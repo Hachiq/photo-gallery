@@ -5,6 +5,7 @@ import { CONFIGURATION } from '../core/configuration/config';
 import { CreateAlbumRequest } from '../models/create-album.request';
 import { Album } from '../models/album';
 import { Observable } from 'rxjs';
+import { Paged } from '../models/paged.response';
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +15,11 @@ export class AlbumService {
 
   http = inject(HttpClient);
 
-  getAlbums(userId?: number) : Observable<Album[]> {
+  getAlbums(page: number, userId?: number) : Observable<Paged<Album>> {
     if (userId === undefined) {
-      return this.http.get<Album[]>(`${this.baseUrl}`);
+      return this.http.get<Paged<Album>>(`${this.baseUrl}?page=${page}`);
     }
-    return this.http.get<Album[]>(`${this.baseUrl}?userId=${userId}`);
+    return this.http.get<Paged<Album>>(`${this.baseUrl}?page=${page}&userId=${userId}`);
   }
 
   createAlbum(request: CreateAlbumRequest) {

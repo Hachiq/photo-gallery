@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CreateAlbumRequest } from '../../models/create-album.request';
 import { Album } from '../../models/album';
 import { AlbumComponent } from '../albums-table/album/album.component';
+import { CONFIGURATION } from '../../core/configuration/config';
+import { Helpers } from '../../services/helpers';
 
 @Component({
   selector: 'app-my-albums',
@@ -15,6 +17,9 @@ import { AlbumComponent } from '../albums-table/album/album.component';
 })
 export class MyAlbumsComponent implements OnInit {
   albums: Album[] = [];
+
+  currentPage: number = 1;
+  totalRecords: number = 0;
 
   title = new FormControl('', [Validators.required, Validators.maxLength(50)])
 
@@ -34,10 +39,21 @@ export class MyAlbumsComponent implements OnInit {
     this.fetch();
   }
 
+  onPageChange(page: number) {
+    this.currentPage = page;
+    this.fetch();
+  }
+
+  totalPages(): number {
+    return Helpers.totalPages(this.totalRecords, CONFIGURATION.album.pageSize);
+  }
+
   fetch() {
-    this.albumService.getAlbums(this.userId).subscribe({
+    this.albumService.getAlbums(this.currentPage, this.userId).subscribe({
       next: (response) => {
-        this.albums = response;
+        this.albums = response.list;
+        console.log(this.albums)
+        this.totalRecords = response.totalRecords;
       }
     });
   }

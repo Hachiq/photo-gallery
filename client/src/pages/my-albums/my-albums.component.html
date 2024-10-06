@@ -26,4 +26,13 @@
       </app-album>
     }
   </div>
+  <div class="pagination-controls">
+    <button class="btn" (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">
+      <i class="arrow left"></i>
+    </button>
+    <span>Page {{ currentPage }} of {{ totalPages() }}</span>
+    <button class="btn" (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages()">
+      <i class="arrow right"></i>
+    </button>
+  </div>
 </div>

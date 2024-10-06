@@ -18,16 +18,16 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAlbums([FromQuery] int? userId)
+        public async Task<IActionResult> GetAlbums([FromQuery] int page, [FromQuery] int? userId)
         {
             if (userId.HasValue)
             {
-                var response = await _albumService.GetAlbumsAsync(userId.Value);
+                var response = await _albumService.GetAlbumsAsync(page, userId.Value);
                 return Ok(response);
             }
             else
             {
-                var response = await _albumService.GetAlbumsAsync();
+                var response = await _albumService.GetAlbumsAsync(page);
                 return Ok(response);
             }
         }

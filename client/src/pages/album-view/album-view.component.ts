@@ -5,6 +5,7 @@ import { ImageService } from '../../services/image.service';
 import { AddImageRequest } from '../../models/add-image.request';
 import { environment } from '../../environments/environment';
 import { CONFIGURATION } from '../../core/configuration/config';
+import { Helpers } from '../../services/helpers';
 
 @Component({
   selector: 'app-album-view',
@@ -81,7 +82,7 @@ export class AlbumViewComponent implements OnInit {
   }
 
   totalPages(): number {
-    return Math.ceil(this.totalRecords / CONFIGURATION.image.pageSize);
+    return Helpers.totalPages(this.totalRecords, CONFIGURATION.album.pageSize);
   }
 
   fetch() {
