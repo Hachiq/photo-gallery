@@ -3,7 +3,7 @@ import { AlbumService } from '../../services/album.service';
 import { Album } from '../../models/album';
 import { AlbumComponent } from './album/album.component';
 import { CONFIGURATION } from '../../core/configuration/config';
-import { Helpers } from '../../services/helpers';
+import { Helpers } from '../../core/services/helpers';
 
 @Component({
   selector: 'app-albums-table',

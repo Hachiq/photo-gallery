@@ -5,7 +5,7 @@ import { ImageService } from '../../services/image.service';
 import { AddImageRequest } from '../../models/add-image.request';
 import { environment } from '../../environments/environment';
 import { CONFIGURATION } from '../../core/configuration/config';
-import { Helpers } from '../../services/helpers';
+import { Helpers } from '../../core/services/helpers';
 
 @Component({
   selector: 'app-album-view',

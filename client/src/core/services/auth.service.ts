@@ -4,7 +4,7 @@ import { LoginRequest } from '../models/login.request';
 import { environment } from '../../environments/environment';
 import { CONFIGURATION } from '../configuration/config';
 import { RegisterRequest } from '../models/register.request';
-import { Helpers } from '../../services/helpers';
+import { Helpers } from './helpers';
 
 @Injectable({
   providedIn: 'root'

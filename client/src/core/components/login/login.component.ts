@@ -29,7 +29,7 @@ export class LoginComponent {
     this.authService.login(data).subscribe({
       next: (response) => {
         localStorage?.setItem(CONFIGURATION.auth.tokenKey, response);
-        this.router.navigate(['albums']);
+        location.href = 'albums';
       },
       error: (error) => {
         try {

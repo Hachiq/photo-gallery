@@ -6,7 +6,7 @@ import { CreateAlbumRequest } from '../../models/create-album.request';
 import { Album } from '../../models/album';
 import { AlbumComponent } from '../albums-table/album/album.component';
 import { CONFIGURATION } from '../../core/configuration/config';
-import { Helpers } from '../../services/helpers';
+import { Helpers } from '../../core/services/helpers';
 
 @Component({
   selector: 'app-my-albums',
