@@ -1,5 +1,9 @@
-<div class="albums">
-  @for (item of albums; track $index) {
-    <div>{{ item.title }}</div>
-  }
+<div class="content">
+  <div class="album-container">
+    @for (item of albums; track $index) {
+      <app-album [item]="item"
+                 [index]="$index">
+      </app-album>
+    }
+  </div>
 </div>

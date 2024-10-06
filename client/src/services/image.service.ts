@@ -25,4 +25,8 @@ export class ImageService {
 
     return this.http.post(`${this.baseUrl}/add`, formData);
   }
+
+  getFirstImage(albumId: number) : Observable<Image> {
+    return this.http.get<Image>(`${this.baseUrl}/first?albumId=${albumId}`);
+  }
 }

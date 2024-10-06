@@ -14,6 +14,14 @@ class ImageService(IRepository _db) : IImageService
         var images = await _db.GetAllAsync<Image>(i => i.AlbumId == albumId);
         return images;
     }
+
+    public async Task<Image> GetFirstAsync(int albumId)
+    {
+        var images = await _db.GetAllAsync<Image>(i => i.AlbumId == albumId);
+        var first = images.OrderByDescending(i => i.UploadedAt).FirstOrDefault() ?? throw new ImageNotFoundException();
+        return first;
+    }
+
     public async Task AddAsync(AddImageRequest model)
     {
         var album = await _db.GetByIdAsync<Album>(model.AlbumId) ?? throw new AlbumNotFoundException();

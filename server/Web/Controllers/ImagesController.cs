@@ -20,6 +20,22 @@ namespace Web.Controllers
             return Ok(response);
         }
 
+        [HttpGet("first")]
+        public async Task<IActionResult> GetFirst([FromQuery] int albumId)
+        {
+            try
+            {
+                var response = await _imageService.GetFirstAsync(albumId);
+                return Ok(response);
+            }
+            catch (ImageNotFoundException ex)
+            {
+                _logger.LogError(ex,
+                    "Get image request failed: album id {albumId}", albumId);
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPost("add")]
         public async Task<IActionResult> Add([FromForm] AddImageRequest request)
         {
