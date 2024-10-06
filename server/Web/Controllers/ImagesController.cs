@@ -21,7 +21,7 @@ namespace Web.Controllers
         }
 
         [HttpPost("add")]
-        public async Task<IActionResult> Add(AddImageRequest request)
+        public async Task<IActionResult> Add([FromForm] AddImageRequest request)
         {
             try
             {

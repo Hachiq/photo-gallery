@@ -1,5 +1,6 @@
 export class Image {
-  filePath!: string;
+  fullPath!: string;
+  relativePath!: string;
   albumId!: number;
   likeCount!: number;
   dislikeCount!: number;

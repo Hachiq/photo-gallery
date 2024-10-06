@@ -32,6 +32,7 @@ class ImageService(IRepository _db) : IImageService
 
         var fileName = Guid.NewGuid().ToString() + Path.GetExtension(model.File.FileName);
         var filePath = Path.Combine(uploadsFolderPath, fileName);
+        var relativePath = Path.Combine("images", fileName);
 
         using (var fileStream = new FileStream(filePath, FileMode.Create))
         {
@@ -41,7 +42,8 @@ class ImageService(IRepository _db) : IImageService
         var image = new Image
         {
             Album = album,
-            FilePath = filePath,
+            FullPath = filePath,
+            RelativePath = relativePath,
             UploadedAt = DateTime.Now,
             LikeCount = 0,
             DislikeCount = 0
@@ -55,9 +57,9 @@ class ImageService(IRepository _db) : IImageService
     {
         var image = await _db.GetByIdAsync<Image>(id) ?? throw new ImageNotFoundException();
 
-        if (File.Exists(image.FilePath))
+        if (File.Exists(image.FullPath))
         {
-            File.Delete(image.FilePath);
+            File.Delete(image.FullPath);
         }
         else
         {

@@ -8,7 +8,11 @@ public class ImageConfiguration : IEntityTypeConfiguration<Image>
 {
     public void Configure(EntityTypeBuilder<Image> builder)
     {
-        builder.Property(i => i.FilePath)
+        builder.Property(i => i.FullPath)
+            .HasMaxLength(200)
+            .IsRequired();
+
+        builder.Property(i => i.RelativePath)
             .HasMaxLength(200)
             .IsRequired();
 
