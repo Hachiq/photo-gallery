@@ -2,6 +2,7 @@
 using Core.Contracts;
 using Core.Exceptions;
 using Core.Requests;
+using Core.Responses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -29,11 +30,9 @@ namespace Web.Controllers
                 var response = await _imageService.GetFirstAsync(albumId);
                 return Ok(response);
             }
-            catch (ImageNotFoundException ex)
+            catch (ImageNotFoundException)
             {
-                _logger.LogError(ex,
-                    "Get image request failed: album id {albumId}", albumId);
-                return BadRequest(ex.Message);
+                return Ok(new EmptyCollectionResponse());
             }
         }
 

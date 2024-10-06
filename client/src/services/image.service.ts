@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { Image } from '../models/image';
 import { AddImageRequest } from '../models/add-image.request';
 import { Paged } from '../models/paged.response';
+import { EmptyCollectionResponse } from '../models/empty-collection.response';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,7 @@ export class ImageService {
     return this.http.post(`${this.baseUrl}/add`, formData);
   }
 
-  getFirstImage(albumId: number) : Observable<Image> {
-    return this.http.get<Image>(`${this.baseUrl}/first?albumId=${albumId}`);
+  getFirstImage(albumId: number) : Observable<Image | EmptyCollectionResponse> {
+    return this.http.get<Image | EmptyCollectionResponse>(`${this.baseUrl}/first?albumId=${albumId}`);
   }
 }
