@@ -28,7 +28,7 @@ export class LoginComponent {
 
     this.authService.login(data).subscribe({
       next: (response) => {
-        localStorage?.setItem(CONFIGURATION.auth.tokenKey, response);
+        localStorage?.setItem(CONFIGURATION.auth.token.key, response);
         location.href = 'albums';
       },
       error: (error) => {

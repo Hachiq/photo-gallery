@@ -5,6 +5,7 @@ import { environment } from '../../environments/environment';
 import { CONFIGURATION } from '../configuration/config';
 import { RegisterRequest } from '../models/register.request';
 import { Helpers } from './helpers';
+import { User } from '../../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -30,13 +31,13 @@ export class AuthService {
   }
 
   logout() {
-    localStorage?.removeItem(CONFIGURATION.auth.tokenKey);
+    localStorage?.removeItem(CONFIGURATION.auth.token.key);
     window.location.reload();
   }
 
   getToken() {
     const isLocalStorageAvailable = typeof window !== 'undefined' && window.localStorage;
-    const token = isLocalStorageAvailable ? localStorage.getItem(CONFIGURATION.auth.tokenKey) : '';
+    const token = isLocalStorageAvailable ? localStorage.getItem(CONFIGURATION.auth.token.key) : '';
     return token;
   }
 
@@ -44,22 +45,19 @@ export class AuthService {
     return !!this.getToken();
   }
 
-  isAdmin() {
-    if (this.getRole() === 'Admin') {
-      return true;
-    }
-    return false;
-  }
-
-  getRole() {
-    const token = this.getToken() ?? '';
-    const decodedJwt = Helpers.decodeJwt(token);
-    return decodedJwt?.payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
-  }
-
   getUserId() {
     const token = this.getToken() ?? '';
     const decodedJwt = Helpers.decodeJwt(token);
-    return parseInt(decodedJwt?.payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
+    return parseInt(decodedJwt?.payload[CONFIGURATION.auth.token.id]);
+  }
+
+  getUser(): User {
+    const token = this.getToken() ?? '';
+    const decodedJwt = Helpers.decodeJwt(token);
+    return {
+      id: parseInt(decodedJwt?.payload[CONFIGURATION.auth.token.id]),
+      username: decodedJwt?.payload[CONFIGURATION.auth.token.name],
+      role: decodedJwt?.payload[CONFIGURATION.auth.token.role]
+    }
   }
 }

@@ -2,11 +2,14 @@
   <div class="nav-item">
     <a routerLink="albums" class="nav-link">Albums</a>
   </div>
-  @if (authService.isAuthenticated()) {
+  @if (authService.isAuthenticated() && user) {
     <div class="nav-item">
-      <a [routerLink]="['albums', userId]" class="nav-link">My Albums</a>
+      <a [routerLink]="['albums', user.id]" class="nav-link">My Albums</a>
     </div>
     <div class="nav-item ml-auto">
+      Hello, {{ user.username }}
+    </div>
+    <div class="nav-item">
       <a (click)="logout()" class="nav-link">Log out</a>
     </div>
   }

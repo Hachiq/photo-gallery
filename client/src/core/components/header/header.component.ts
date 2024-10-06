@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { User } from '../../../models/user';
 
 @Component({
   selector: 'app-header',
@@ -11,10 +12,10 @@ import { AuthService } from '../../services/auth.service';
 })
 export class HeaderComponent implements OnInit {
   authService = inject(AuthService);
-  userId?: number;
+  user?: User;
 
   ngOnInit(): void {
-    this.userId = this.authService.getUserId();
+    this.user = this.authService.getUser();
   }
 
   logout() {
