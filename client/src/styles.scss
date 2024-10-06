@@ -1,6 +1,7 @@
 :root {
   --warning: #D9534F;
   --primary: #17A2B8;
+  --secondary: #AAA;
   --header: #0D1117;
   --background: #201F31;
   --text: #fff;
@@ -62,13 +63,16 @@ body {
   justify-content: center;
 }
 
+.content {
+  padding: 2rem;
+}
+
 .content-center {
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
   height: 70vh;
-  padding: 2rem;
 }
 
 .form-header {
