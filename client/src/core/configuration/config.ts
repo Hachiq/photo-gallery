@@ -3,4 +3,10 @@ export const CONFIGURATION = {
     url: 'api/auth',
     tokenKey: 'token'
   },
+  album : {
+    url: 'api/albums'
+  },
+  image : {
+    url: 'api/images'
+  }
 };

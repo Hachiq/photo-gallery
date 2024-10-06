@@ -4,6 +4,13 @@ import { AuthService } from "./auth.service";
 
 export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn) {
   const authService = inject(AuthService);
+
+  // let token = '';
+
+  // if (authService.isAuthenticated()) {
+  //   token = authService.getToken() ?? '';
+  // }
+
   const token = authService.getToken() ?? '';
 
   const authReq = req.clone({

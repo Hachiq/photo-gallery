@@ -22,7 +22,7 @@ class AlbumService(IRepository _db) : IAlbumService
         var album = await _db.GetByIdAsync<Album>(albumId) ?? throw new AlbumNotFoundException();
         return album;
     }
-    public async Task CreateAlbumAsync(CreateAlbumRequest model)
+    public async Task<int> CreateAlbumAsync(CreateAlbumRequest model)
     {
         var user = await _db.GetByIdAsync<User>(model.UserId) ?? throw new UserNotFoundException();
 
@@ -35,5 +35,7 @@ class AlbumService(IRepository _db) : IAlbumService
 
         await _db.AddAsync(album);
         await _db.SaveChangesAsync();
+
+        return (int)album.Id;
     }
 }

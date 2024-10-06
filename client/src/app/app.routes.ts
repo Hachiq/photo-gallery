@@ -10,6 +10,6 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'album/:id', component: AlbumViewComponent },
   { path: 'albums', component: AlbumsTableComponent },
-  { path: 'my-albums', component: MyAlbumsComponent }, // TODO: Consider renaming the route
+  { path: 'albums/:id', component: MyAlbumsComponent },
   { path: '', component: AlbumsTableComponent },
 ];

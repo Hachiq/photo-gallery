@@ -33,12 +33,12 @@ export class AuthService {
   }
 
   getToken() {
-    return localStorage.getItem(CONFIGURATION.auth.tokenKey);
+    const isLocalStorageAvailable = typeof window !== 'undefined' && window.localStorage;
+    const token = isLocalStorageAvailable ? localStorage.getItem(CONFIGURATION.auth.tokenKey) : '';
+    return token;
   }
 
   isAuthenticated() {
-    const isLocalStorageAvailable = typeof window !== 'undefined' && window.localStorage;
-    const token = isLocalStorageAvailable ? this.getToken() : '';
-    return !!token;
+    return !!this.getToken();
   }
 }

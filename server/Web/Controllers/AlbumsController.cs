@@ -37,8 +37,8 @@ namespace Web.Controllers
         {
             try
             {
-                await _albumService.CreateAlbumAsync(request);
-                return Ok();
+                var response = await _albumService.CreateAlbumAsync(request);
+                return Ok(response);
             }
             catch (UserNotFoundException ex)
             {

@@ -1,1 +1,5 @@
-<p>albums-table works!</p>
+<div class="albums">
+  @for (item of albums; track $index) {
+    <div>{{ item.title }}</div>
+  }
+</div>

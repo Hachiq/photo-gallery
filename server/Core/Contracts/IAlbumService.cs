@@ -8,5 +8,5 @@ public interface IAlbumService
     Task<IEnumerable<Album>> GetAlbumsAsync();
     Task<IEnumerable<Album>> GetAlbumsAsync(int userId);
     Task<Album> GetAlbumAsync(int albumId);
-    Task CreateAlbumAsync(CreateAlbumRequest model);
+    Task<int> CreateAlbumAsync(CreateAlbumRequest model);
 }

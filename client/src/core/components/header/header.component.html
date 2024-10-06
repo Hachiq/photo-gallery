@@ -3,7 +3,7 @@
     <a routerLink="albums" class="nav-link">Albums</a>
   </div>
   <div class="nav-item">
-    <a routerLink="my-albums" class="nav-link">My Albums</a>
+    <a [routerLink]="['albums', userId]" class="nav-link">My Albums</a>
   </div>
   @if (!authService.isAuthenticated()) {
     <div class="nav-item">
