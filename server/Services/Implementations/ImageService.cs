@@ -12,7 +12,8 @@ class ImageService(IRepository _db) : IImageService
     public async Task<IEnumerable<Image>> GetByAlbumIdAsync(int albumId)
     {
         var images = await _db.GetAllAsync<Image>(i => i.AlbumId == albumId);
-        return images;
+        var orderedImages = images.OrderByDescending(i => i.UploadedAt);
+        return orderedImages;
     }
 
     public async Task<Image> GetFirstAsync(int albumId)

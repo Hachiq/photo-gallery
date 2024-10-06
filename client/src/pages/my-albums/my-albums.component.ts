@@ -4,11 +4,12 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CreateAlbumRequest } from '../../models/create-album.request';
 import { Album } from '../../models/album';
+import { AlbumComponent } from '../albums-table/album/album.component';
 
 @Component({
   selector: 'app-my-albums',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, AlbumComponent],
   templateUrl: './my-albums.component.html',
   styleUrl: './my-albums.component.scss'
 })

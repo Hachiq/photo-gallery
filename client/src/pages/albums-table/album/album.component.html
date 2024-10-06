@@ -1,6 +1,14 @@
 <div class="album-item">
-  <div class="image-item">
-    <img [src]="baseUrl + '/' + image?.relativePath" alt="Image {{ index }}">
-  </div>
+    <div class="image-item">
+      @if (image) {
+        <img [src]="baseUrl + '/' + image.relativePath" alt="Image {{ index }}">
+      }
+      <div class="title">
+        {{ item.title }}
+        @if (!image) {
+          <span>(empty)</span>
+        }
+      </div>
+    </div>
   <div class="backdrop-item"></div>
 </div>
