@@ -16,6 +16,7 @@ public static class DependencyInjection
         services.AddRepository();
         services.AddPasswordService();
         services.AddAlbumService();
+        services.AddImageService();
 
         return services;
     }
@@ -54,6 +55,12 @@ public static class DependencyInjection
     private static IServiceCollection AddAlbumService(this IServiceCollection services)
     {
         services.AddScoped<IAlbumService, AlbumService>();
+        return services;
+    }
+
+    private static IServiceCollection AddImageService(this IServiceCollection services)
+    {
+        services.AddScoped<IImageService, ImageService>();
         return services;
     }
 }

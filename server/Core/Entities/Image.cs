@@ -5,7 +5,6 @@ namespace Core.Entities;
 public class Image : BaseEntity
 {
     public required string FilePath { get; set; }
-    public required string ThumbnailPath { get; set; }
     public long AlbumId { get; set; }
     public required Album Album { get; set; }
     public int LikeCount { get; set; }

@@ -12,10 +12,6 @@ public class ImageConfiguration : IEntityTypeConfiguration<Image>
             .HasMaxLength(200)
             .IsRequired();
 
-        builder.Property(i => i.ThumbnailPath)
-            .HasMaxLength(200)
-            .IsRequired();
-
         builder.Property(i => i.UploadedAt)
             .IsRequired();
 
