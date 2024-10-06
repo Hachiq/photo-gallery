@@ -1,23 +1,25 @@
-<div class="content content-center">
-  <section class="create-album">
-    <form class="form">
-      <div class="form-header">Create an album</div>
-      <div class="input-group">
-        <input type="text" id="title" placeholder="Title" [formControl]="title">
-        @if (title.invalid && title.touched) {
-          <div class="input-error">
-            @if (title.hasError('required')) {
-              <span>Title is required</span>
-            } @else if (title.hasError('maxlength')) {
-              <span>Title too long</span>
-            }
-          </div>
-        }
-      </div>
-      <button type="button" (click)="createAlbum()" class="btn btn-submit" [disabled]="title.invalid">Create</button>
-    </form>
-  </section>
-</div>
+@if (canCreate()) {
+  <div class="content content-center">
+    <section class="create-album">
+      <form class="form">
+        <div class="form-header">Create an album</div>
+        <div class="input-group">
+          <input type="text" id="title" placeholder="Title" [formControl]="title">
+          @if (title.invalid && title.touched) {
+            <div class="input-error">
+              @if (title.hasError('required')) {
+                <span>Title is required</span>
+              } @else if (title.hasError('maxlength')) {
+                <span>Title too long</span>
+              }
+            </div>
+          }
+        </div>
+        <button type="button" (click)="createAlbum()" class="btn btn-submit" [disabled]="title.invalid">Create</button>
+      </form>
+    </section>
+  </div>
+}
 <div class="content">
   <div class="album-container">
     @for (item of albums; track $index) {

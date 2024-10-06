@@ -7,6 +7,7 @@ import { Album } from '../../models/album';
 import { AlbumComponent } from '../albums-table/album/album.component';
 import { CONFIGURATION } from '../../core/configuration/config';
 import { Helpers } from '../../core/services/helpers';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-my-albums',
@@ -24,6 +25,7 @@ export class MyAlbumsComponent implements OnInit {
   title = new FormControl('', [Validators.required, Validators.maxLength(50)])
 
   albumService = inject(AlbumService);
+  authService = inject(AuthService);
   router = inject(Router);
   route = inject(ActivatedRoute);
 
@@ -48,11 +50,14 @@ export class MyAlbumsComponent implements OnInit {
     return Helpers.totalPages(this.totalRecords, CONFIGURATION.album.pageSize);
   }
 
+  canCreate(): boolean {
+    return this.authService.getUserId() === this.userId;
+  }
+
   fetch() {
     this.albumService.getAlbums(this.currentPage, this.userId).subscribe({
       next: (response) => {
         this.albums = response.list;
-        console.log(this.albums)
         this.totalRecords = response.totalRecords;
       }
     });

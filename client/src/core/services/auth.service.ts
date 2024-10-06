@@ -31,6 +31,7 @@ export class AuthService {
 
   logout() {
     localStorage?.removeItem(CONFIGURATION.auth.tokenKey);
+    window.location.reload();
   }
 
   getToken() {
@@ -41,6 +42,19 @@ export class AuthService {
 
   isAuthenticated() {
     return !!this.getToken();
+  }
+
+  isAdmin() {
+    if (this.getRole() === 'Admin') {
+      return true;
+    }
+    return false;
+  }
+
+  getRole() {
+    const token = this.getToken() ?? '';
+    const decodedJwt = Helpers.decodeJwt(token);
+    return decodedJwt?.payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
   }
 
   getUserId() {

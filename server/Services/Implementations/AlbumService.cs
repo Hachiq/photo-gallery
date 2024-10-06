@@ -15,6 +15,7 @@ class AlbumService(IRepository _db) : IAlbumService
         var orderedAlbums = albums.OrderByDescending(a => a.CreatedAt)
                                   .Skip((page - 1) * Common.PageSize)
                                   .Take(5);
+
         var totalRecords = albums.Count();
         return new PagedResponse<Album>(orderedAlbums, totalRecords);
     }
