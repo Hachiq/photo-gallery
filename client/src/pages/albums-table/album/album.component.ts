@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { EmptyCollectionResponse } from '../../../models/empty-collection.response';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-album',
@@ -25,6 +26,7 @@ export class AlbumComponent implements OnInit {
   image?: Image
 
   imageService = inject(ImageService);
+  authService = inject(AuthService);
 
   ngOnInit(): void {
     this.fetch();
@@ -47,7 +49,7 @@ export class AlbumComponent implements OnInit {
   }
 
   canDelete(): boolean {
-    return true;
+    return this.authService.isAdmin() || this.item.userId === this.authService.getUserId();
   }
 
   onDelete($event: MouseEvent) {

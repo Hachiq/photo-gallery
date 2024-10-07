@@ -69,13 +69,16 @@
 .rates {
   position: absolute;
   display: flex;
-  gap: 10px;
+  gap: 15px;
   bottom: 20px;
   left: 20px;
   font-size: 24px;
   color: var(--primary);
 
   .btn {
+    display: flex;
+    gap: 5px;
+
     fa-icon {
       opacity: .7;
       transition: opacity .2s;

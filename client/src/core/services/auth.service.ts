@@ -45,6 +45,10 @@ export class AuthService {
     return !!this.getToken();
   }
 
+  isAdmin() {
+    return this.getUser().role === CONFIGURATION.roles.admin;
+  }
+
   getUserId() {
     const token = this.getToken() ?? '';
     const decodedJwt = Helpers.decodeJwt(token);

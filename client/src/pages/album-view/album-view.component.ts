@@ -112,21 +112,25 @@ export class AlbumViewComponent implements OnInit {
   }
 
   canRate(): boolean {
-    return true;
+    return this.authService.isAuthenticated();
   }
 
-  onLike($event: MouseEvent) {
+  onLike(image: Image, $event: MouseEvent) {
     $event.stopPropagation();
-    console.log('liked')
+    if (this.canRate()) {
+      console.log('liked')
+    }
   }
 
-  onDislike($event: MouseEvent) {
+  onDislike(image: Image, $event: MouseEvent) {
     $event.stopPropagation();
-    console.log('disliked')
+    if (this.canRate()) {
+      console.log('disliked')
+    }
   }
 
   canDelete(): boolean {
-    return true;
+    return this.authService.isAdmin() || this.album?.userId === this.authService.getUserId();
   }
 
   onDelete() {
