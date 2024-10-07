@@ -31,4 +31,8 @@ export class ImageService {
   getFirstImage(albumId: number) : Observable<Image | EmptyCollectionResponse> {
     return this.http.get<Image | EmptyCollectionResponse>(`${this.baseUrl}/first?albumId=${albumId}`);
   }
+
+  deleteImage(id: number) {
+    return this.http.delete(`${this.baseUrl}/${id}/delete`);
+  }
 }

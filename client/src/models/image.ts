@@ -1,4 +1,5 @@
 export class Image {
+  id!: number;
   fullPath!: string;
   relativePath!: string;
   albumId!: number;

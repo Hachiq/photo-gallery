@@ -48,7 +48,7 @@ export class AlbumViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.fetchAlbum();
+    this.fetch();
   }
 
   onFileSelected(event: Event): void {
@@ -87,21 +87,21 @@ export class AlbumViewComponent implements OnInit {
       next: () => {
         this.currentPage = 1;
         this.clearSelectedFile();
-        this.fetchAlbum();
+        this.fetch();
       }
     });
   }
 
   onPageChange(page: number) {
     this.currentPage = page;
-    this.fetchAlbum();
+    this.fetch();
   }
 
   totalPages(): number {
     return Helpers.totalPages(this.totalRecords, CONFIGURATION.album.pageSize);
   }
 
-  fetchAlbum() {
+  fetch() {
     this.albumService.getAlbum(this.albumId, this.currentPage).subscribe({
       next: (response) => {
         this.album = response.album;
@@ -117,6 +117,7 @@ export class AlbumViewComponent implements OnInit {
 
   onLike(image: Image, $event: MouseEvent) {
     $event.stopPropagation();
+
     if (this.canRate()) {
       console.log('liked')
     }
@@ -124,6 +125,7 @@ export class AlbumViewComponent implements OnInit {
 
   onDislike(image: Image, $event: MouseEvent) {
     $event.stopPropagation();
+
     if (this.canRate()) {
       console.log('disliked')
     }
@@ -133,7 +135,13 @@ export class AlbumViewComponent implements OnInit {
     return this.authService.isAdmin() || this.album?.userId === this.authService.getUserId();
   }
 
-  onDelete() {
-    console.log('deleted')
+  onDelete(item: Image, $event: MouseEvent) {
+    $event.stopPropagation();
+
+    this.imageService.deleteImage(item.id).subscribe({
+      next: () => {
+        this.fetch();
+      }
+    });
   }
 }

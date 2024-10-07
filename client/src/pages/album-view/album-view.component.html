@@ -22,7 +22,7 @@
       <div class="image-item">
         <img [src]="baseUrl + '/' + item.relativePath" alt="Image {{ $index }}">
         @if (canDelete()) {
-          <div class="delete" (click)="onDelete()">
+          <div class="delete" (click)="onDelete(item, $event)">
             <button class="btn">
               <fa-icon [icon]="itrash"></fa-icon>
             </button>
