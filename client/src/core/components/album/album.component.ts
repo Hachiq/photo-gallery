@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router';
 import { EmptyCollectionResponse } from '../../../models/empty-collection.response';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { AuthService } from '../../../core/services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { AlbumService } from '../../../services/album.service';
 
 @Component({

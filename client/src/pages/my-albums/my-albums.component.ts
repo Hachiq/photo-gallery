@@ -4,7 +4,7 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CreateAlbumRequest } from '../../models/create-album.request';
 import { Album } from '../../models/album';
-import { AlbumComponent } from '../albums-table/album/album.component';
+import { AlbumComponent } from '../../core/components/album/album.component';
 import { CONFIGURATION } from '../../core/configuration/config';
 import { Helpers } from '../../core/services/helpers';
 import { AuthService } from '../../core/services/auth.service';

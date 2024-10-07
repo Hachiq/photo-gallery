@@ -15,7 +15,7 @@ class AlbumService(IRepository _db) : IAlbumService
         var albums = await _db.GetAllAsync<Album>();
         var orderedAlbums = albums.OrderByDescending(a => a.CreatedAt)
                                   .Skip((page - 1) * Common.PageSize)
-                                  .Take(5);
+                                  .Take(Common.PageSize);
 
         var totalRecords = albums.Count();
         return new PagedResponse<Album>(orderedAlbums, totalRecords);
@@ -28,7 +28,7 @@ class AlbumService(IRepository _db) : IAlbumService
         var albums = await _db.GetAllAsync<Album>(a => a.User == user);
         var orderedAlbums = albums.OrderByDescending(a => a.CreatedAt)
                                   .Skip((page - 1) * Common.PageSize)
-                                  .Take(5);
+                                  .Take(Common.PageSize);
 
         var totalRecords = albums.Count();
         return new PagedResponse<Album>(orderedAlbums, totalRecords);
@@ -39,7 +39,7 @@ class AlbumService(IRepository _db) : IAlbumService
         var album = await _db.GetByIdAsync<Album>(albumId, a => a.Images) ?? throw new AlbumNotFoundException();
         var orderedImages = album.Images.OrderByDescending(i => i.UploadedAt)
                                   .Skip((page - 1) * Common.PageSize)
-                                  .Take(5);
+                                  .Take(Common.PageSize);
 
         var totalRecords = album.Images.Count;
 

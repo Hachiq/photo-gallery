@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { AlbumService } from '../../services/album.service';
 import { Album } from '../../models/album';
-import { AlbumComponent } from './album/album.component';
+import { AlbumComponent } from '../../core/components/album/album.component';
 import { CONFIGURATION } from '../../core/configuration/config';
 import { Helpers } from '../../core/services/helpers';
 

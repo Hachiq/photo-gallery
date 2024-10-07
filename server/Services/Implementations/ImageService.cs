@@ -14,7 +14,7 @@ class ImageService(IRepository _db) : IImageService
         var images = await _db.GetAllAsync<Image>(i => i.AlbumId == albumId);
         var orderedImages = images.OrderByDescending(i => i.UploadedAt)
                                   .Skip((page - 1) * Common.PageSize)
-                                  .Take(5);
+                                  .Take(Common.PageSize);
 
         var totalRecords = images.Count();
 
