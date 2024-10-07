@@ -130,11 +130,17 @@ export class AlbumViewComponent implements OnInit {
     this.currentPage = page;
     this.fetch();
   }
-
+  
   @HostListener('window:keydown', ['$event'])
   handleKeyDown(event: KeyboardEvent) {
     if (event.key === 'Escape') {
       this.closeFullImage();
+    }
+    if (event.key === 'ArrowLeft') {
+      this.previousImage();
+    }
+    if (event.key === 'ArrowRight') {
+      this.nextImage();
     }
   }
 

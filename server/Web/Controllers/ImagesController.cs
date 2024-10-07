@@ -59,6 +59,7 @@ namespace Web.Controllers
             }
         }
 
+        [Authorize]
         [HttpDelete("{id}/delete")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
