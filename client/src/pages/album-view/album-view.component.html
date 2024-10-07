@@ -19,7 +19,7 @@
       }
     }
     @for (item of images; track $index) {
-      <div class="image-item" (click)="openFullImage(item)">
+      <div class="image-item scalable" (click)="openFullImage(item)">
         <img [src]="baseUrl + '/' + item.relativePath" alt="Image {{ $index }}">
         @if (canDelete()) {
           <div class="delete" (click)="onDelete(item, $event)">

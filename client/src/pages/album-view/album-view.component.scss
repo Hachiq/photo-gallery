@@ -59,6 +59,14 @@
   position: relative;
 }
 
+.scalable {
+  transition: all .5s ease;
+
+  &:hover {
+    transform: scale(1.02);
+  }
+}
+
 .image-item img {
   border-radius: 4px;
   width: 100%;
