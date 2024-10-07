@@ -6,6 +6,7 @@ import { CreateAlbumRequest } from '../models/create-album.request';
 import { Album } from '../models/album';
 import { Observable } from 'rxjs';
 import { Paged } from '../models/paged.response';
+import { AlbumViewResponse } from '../models/album-view.response';
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +23,8 @@ export class AlbumService {
     return this.http.get<Paged<Album>>(`${this.baseUrl}?page=${page}&userId=${userId}`);
   }
 
-  getAlbum(id: number) : Observable<Album> {
-    return this.http.get<Album>(`${this.baseUrl}/${id}`);
+  getAlbum(id: number, page: number) : Observable<AlbumViewResponse> {
+    return this.http.get<AlbumViewResponse>(`${this.baseUrl}/${id}?page=${page}`);
   }
 
   createAlbum(request: CreateAlbumRequest) {

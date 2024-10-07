@@ -8,6 +8,6 @@ public interface IAlbumService
 {
     Task<PagedResponse<Album>> GetAlbumsAsync(int page);
     Task<PagedResponse<Album>> GetAlbumsAsync(int page, int userId);
-    Task<Album> GetAlbumAsync(int albumId);
+    Task<AlbumViewResponse> GetAlbumAsync(int albumId, int page);
     Task<int> CreateAlbumAsync(CreateAlbumRequest model);
 }

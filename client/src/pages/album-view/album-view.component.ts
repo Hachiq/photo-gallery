@@ -42,7 +42,6 @@ export class AlbumViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.fetchImages();
     this.fetchAlbum();
   }
 
@@ -82,34 +81,26 @@ export class AlbumViewComponent implements OnInit {
       next: () => {
         this.currentPage = 1;
         this.clearSelectedFile();
-        this.fetchImages();
+        this.fetchAlbum();
       }
     });
   }
 
   onPageChange(page: number) {
     this.currentPage = page;
-    this.fetchImages();
+    this.fetchAlbum();
   }
 
   totalPages(): number {
     return Helpers.totalPages(this.totalRecords, CONFIGURATION.album.pageSize);
   }
-
-  fetchImages() {
-    this.imageService.getImages(this.albumId, this.currentPage).subscribe({
-      next: (response) => {
-        this.images = response.list;
-        this.totalRecords = response.totalRecords;
-      }
-    });
-  }
-
+  
   fetchAlbum() {
-    this.albumService.getAlbum(this.albumId).subscribe({
+    this.albumService.getAlbum(this.albumId, this.currentPage).subscribe({
       next: (response) => {
-        this.album = response;
-        console.log(this.album)
+        this.album = response.album;
+        this.images = response.images.list;
+        this.totalRecords = response.images.totalRecords;
       }
     });
   }

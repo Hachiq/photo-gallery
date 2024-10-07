@@ -12,9 +12,9 @@ namespace Web.Controllers
     public class AlbumsController(IAlbumService _albumService) : ControllerBase
     {
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetAlbum([FromRoute] int id)
+        public async Task<IActionResult> GetAlbum([FromRoute] int id, [FromQuery] int page)
         {
-            var response = await _albumService.GetAlbumAsync(id);
+            var response = await _albumService.GetAlbumAsync(id, page);
             return Ok(response);
         }
 

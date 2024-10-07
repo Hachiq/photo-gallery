@@ -1,5 +1,6 @@
 ﻿using Core.Constants;
 using Core.Contracts;
+using Core.DTOs;
 using Core.Entities;
 using Core.Exceptions;
 using Core.Requests;
@@ -31,10 +32,26 @@ class AlbumService(IRepository _db) : IAlbumService
         return new PagedResponse<Album>(orderedAlbums, totalRecords);
     }
 
-    public async Task<Album> GetAlbumAsync(int albumId)
+    public async Task<AlbumViewResponse> GetAlbumAsync(int albumId, int page)
     {
         var album = await _db.GetByIdAsync<Album>(albumId, a => a.Images) ?? throw new AlbumNotFoundException();
-        return album;
+        var orderedImages = album.Images.OrderByDescending(i => i.UploadedAt)
+                                  .Skip((page - 1) * Common.PageSize)
+                                  .Take(5);
+
+        var totalRecords = album.Images.Count;
+
+        var dto = new AlbumDTO
+        {
+            Id = albumId,
+            Title = album.Title,
+            CreatedAt = album.CreatedAt,
+            UserId = album.UserId
+        };
+
+        var paged = new PagedResponse<Image>(orderedImages, totalRecords);
+
+        return new AlbumViewResponse(dto, paged);
     }
     public async Task<int> CreateAlbumAsync(CreateAlbumRequest model)
     {
