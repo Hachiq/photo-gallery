@@ -9,13 +9,14 @@ import { Helpers } from '../../core/services/helpers';
 import { AuthService } from '../../core/services/auth.service';
 import { Album } from '../../models/album';
 import { AlbumService } from '../../services/album.service';
-import { faThumbsDown, faThumbsUp, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faAngleLeft, faAngleRight, faThumbsDown, faThumbsUp, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-album-view',
   standalone: true,
-  imports: [FontAwesomeModule],
+  imports: [FontAwesomeModule, CommonModule],
   templateUrl: './album-view.component.html',
   styleUrl: './album-view.component.scss'
 })
@@ -23,6 +24,8 @@ export class AlbumViewComponent implements OnInit {
   ilike = faThumbsUp;
   idislike = faThumbsDown;
   itrash = faTrashCan;
+  iangleLeft = faAngleLeft;
+  iangleRight = faAngleRight;
   
   images: Image[] = [];
   album?: Album;
@@ -33,6 +36,8 @@ export class AlbumViewComponent implements OnInit {
 
   selectedFile: File | null = null;
   selectedFileUrl?: string | ArrayBuffer | null;
+
+  selectedImage: Image | null = null;
 
   imageService = inject(ImageService);
   authService = inject(AuthService);
@@ -90,6 +95,35 @@ export class AlbumViewComponent implements OnInit {
         this.fetch();
       }
     });
+  }
+
+
+  closeFullImage() {
+    this.selectedImage = null;
+  }
+
+  openFullImage(item: Image) {
+    this.selectedImage = item;
+  }
+
+  nextImage() {
+    if (!this.selectedImage) {
+      return;
+    }
+
+    const currentIndex = this.images.indexOf(this.selectedImage);
+    const nextIndex = (currentIndex + 1) % this.images.length;
+    this.selectedImage = this.images[nextIndex];
+  }
+
+  previousImage() {
+    if (!this.selectedImage) {
+      return;
+    }
+
+    const currentIndex = this.images.indexOf(this.selectedImage);
+    const prevIndex = (currentIndex - 1 + this.images.length) % this.images.length;
+    this.selectedImage = this.images[prevIndex];
   }
 
   onPageChange(page: number) {

@@ -19,7 +19,7 @@
       }
     }
     @for (item of images; track $index) {
-      <div class="image-item">
+      <div class="image-item" (click)="openFullImage(item)">
         <img [src]="baseUrl + '/' + item.relativePath" alt="Image {{ $index }}">
         @if (canDelete()) {
           <div class="delete" (click)="onDelete(item, $event)">
@@ -51,3 +51,22 @@
     </button>
   </div>
 </div>
+
+<ng-template #fullImageModal>
+  <div class="modal">
+    <div class="modal-content">
+      <img [src]="baseUrl + '/' + selectedImage?.relativePath" alt="Full-size image">
+      <button class="btn previous" (click)="previousImage()">
+        <fa-icon [icon]="iangleLeft"></fa-icon>
+      </button>
+      <button class="btn next" (click)="nextImage()">
+        <fa-icon [icon]="iangleRight"></fa-icon>
+      </button>
+    </div>
+    <div class="modal-backdrop" (click)="closeFullImage()"></div>
+  </div>
+</ng-template>
+
+@if (selectedImage) {
+  <ng-container [ngTemplateOutlet]="fullImageModal" />
+}
