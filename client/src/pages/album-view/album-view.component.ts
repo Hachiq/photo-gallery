@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Image } from '../../models/image';
 import { ImageService } from '../../services/image.service';
@@ -129,6 +129,13 @@ export class AlbumViewComponent implements OnInit {
   onPageChange(page: number) {
     this.currentPage = page;
     this.fetch();
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  handleKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Escape') {
+      this.closeFullImage();
+    }
   }
 
   totalPages(): number {
