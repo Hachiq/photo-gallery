@@ -30,4 +30,8 @@ export class AlbumService {
   createAlbum(request: CreateAlbumRequest) {
     return this.http.post(`${this.baseUrl}/create`, request);
   }
+
+  deleteAlbum(id: number) {
+    return this.http.delete(`${this.baseUrl}/${id}/delete`);
+  }
 }

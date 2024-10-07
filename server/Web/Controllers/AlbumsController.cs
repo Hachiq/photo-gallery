@@ -59,5 +59,22 @@ namespace Web.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [Authorize]
+        [HttpDelete("{id}/delete")]
+        public async Task<IActionResult> DeleteAlbum([FromRoute] int id)
+        {
+            try
+            {
+                await _albumService.DeleteAlbumAsync(id);
+                return Ok();
+            }
+            catch (Exception ex) when (ex is AlbumNotFoundException or InvalidFileException)
+            {
+                _logger.LogError(ex,
+                    "Delete request failed: album id {id}", id);
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

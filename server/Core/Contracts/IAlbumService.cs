@@ -10,4 +10,5 @@ public interface IAlbumService
     Task<PagedResponse<Album>> GetAlbumsAsync(int page, int userId);
     Task<AlbumViewResponse> GetAlbumAsync(int albumId, int page);
     Task<int> CreateAlbumAsync(CreateAlbumRequest model);
+    Task DeleteAlbumAsync(int id);
 }

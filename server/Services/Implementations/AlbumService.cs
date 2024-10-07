@@ -71,4 +71,26 @@ class AlbumService(IRepository _db) : IAlbumService
 
         return (int)album.Id;
     }
+
+    public async Task DeleteAlbumAsync(int id)
+    {
+        var album = await _db.GetByIdAsync<Album>(id, a => a.Images) ?? throw new AlbumNotFoundException();
+
+        foreach (var item in album.Images)
+        {
+            if (File.Exists(item.FullPath))
+            {
+                File.Delete(item.FullPath);
+            }
+            else
+            {
+                throw new InvalidFileException();
+            }
+
+            _db.Delete(item);
+        }
+
+        _db.Delete(album);
+        await _db.SaveChangesAsync();
+    }
 }

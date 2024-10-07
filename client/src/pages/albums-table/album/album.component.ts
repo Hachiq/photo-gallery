@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Album } from '../../../models/album';
 import { ImageService } from '../../../services/image.service';
@@ -8,6 +8,7 @@ import { EmptyCollectionResponse } from '../../../models/empty-collection.respon
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AuthService } from '../../../core/services/auth.service';
+import { AlbumService } from '../../../services/album.service';
 
 @Component({
   selector: 'app-album',
@@ -21,11 +22,13 @@ export class AlbumComponent implements OnInit {
 
   baseUrl = environment.apiUrl;
 
+  @Output() albumDeleted = new EventEmitter();
   @Input() item!: Album;
   @Input() index!: number;
   image?: Image
 
   imageService = inject(ImageService);
+  albumService = inject(AlbumService);
   authService = inject(AuthService);
 
   ngOnInit(): void {
@@ -54,6 +57,10 @@ export class AlbumComponent implements OnInit {
 
   onDelete($event: MouseEvent) {
     $event.stopPropagation();
-    console.log('deleted')
+    this.albumService.deleteAlbum(this.item.id).subscribe({
+      next: () => {
+        this.albumDeleted.emit();
+      }
+    });
   }
 }
