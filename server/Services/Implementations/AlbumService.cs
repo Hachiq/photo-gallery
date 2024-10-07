@@ -23,7 +23,9 @@ class AlbumService(IRepository _db) : IAlbumService
 
     public async Task<PagedResponse<Album>> GetAlbumsAsync(int page, int userId)
     {
-        var albums = await _db.GetAllAsync<Album>(a => a.UserId == userId);
+        var user = await _db.GetByIdAsync<User>(userId) ?? throw new UserNotFoundException();
+
+        var albums = await _db.GetAllAsync<Album>(a => a.User == user);
         var orderedAlbums = albums.OrderByDescending(a => a.CreatedAt)
                                   .Skip((page - 1) * Common.PageSize)
                                   .Take(5);

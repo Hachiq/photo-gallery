@@ -59,6 +59,11 @@ export class MyAlbumsComponent implements OnInit {
       next: (response) => {
         this.albums = response.list;
         this.totalRecords = response.totalRecords;
+      },
+      error: (error) => {
+        if (error.status === 400) {
+          this.router.navigate(['']);
+        }
       }
     });
   }

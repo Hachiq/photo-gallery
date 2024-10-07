@@ -9,7 +9,9 @@ namespace Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AlbumsController(IAlbumService _albumService) : ControllerBase
+    public class AlbumsController(
+        IAlbumService _albumService,
+        ILogger<AlbumsController> _logger) : ControllerBase
     {
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAlbum([FromRoute] int id, [FromQuery] int page)
@@ -21,16 +23,26 @@ namespace Web.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAlbums([FromQuery] int page, [FromQuery] int? userId)
         {
-            if (userId.HasValue)
+            try
             {
-                var response = await _albumService.GetAlbumsAsync(page, userId.Value);
-                return Ok(response);
+                if (userId.HasValue)
+                {
+                    var response = await _albumService.GetAlbumsAsync(page, userId.Value);
+                    return Ok(response);
+                }
+                else
+                {
+                    var response = await _albumService.GetAlbumsAsync(page);
+                    return Ok(response);
+                }
             }
-            else
+            catch (UserNotFoundException ex)
             {
-                var response = await _albumService.GetAlbumsAsync(page);
-                return Ok(response);
+                _logger.LogError(ex,
+                    "Get albums request failed: user id {id}", userId);
+                return BadRequest(ex.Message);
             }
+            
         }
 
         [Authorize]
