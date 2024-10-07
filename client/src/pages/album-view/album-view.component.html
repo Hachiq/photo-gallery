@@ -1,22 +1,23 @@
 <div class="content">
   <div class="image-container">
-    @if (selectedFile) {
-      <div class="image-item">
-        <img [src]="selectedFileUrl" alt="Selected Image">
-        <div class="buttons">
-          <button class="btn btn-clear" (click)="clearSelectedFile()">Clear</button>
-          <button class="btn btn-save" (click)="save()">Save</button>
+    @if (canUpload()) {
+      @if (selectedFile) {
+        <div class="image-item">
+          <img [src]="selectedFileUrl" alt="Selected Image">
+          <div class="buttons">
+            <button class="btn btn-clear" (click)="clearSelectedFile()">Clear</button>
+            <button class="btn btn-save" (click)="save()">Save</button>
+          </div>
         </div>
-      </div>
-    } @else {
-      <div class="image-placeholder">
-        <label for="upload">
-          <span>Upload Image</span>
-          <input type="file" id="upload" accept="image/*" (change)="onFileSelected($event)" />
-        </label>
-      </div>
+      } @else {
+        <div class="image-placeholder">
+          <label for="upload">
+            <span>Upload Image</span>
+            <input type="file" id="upload" accept="image/*" (change)="onFileSelected($event)" />
+          </label>
+        </div>
+      }
     }
-
     @for (item of images; track $index) {
       <div class="image-item">
         <img [src]="baseUrl + '/' + item.relativePath" alt="Image {{ $index }}">

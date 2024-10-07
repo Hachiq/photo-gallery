@@ -6,6 +6,9 @@ import { AddImageRequest } from '../../models/add-image.request';
 import { environment } from '../../environments/environment';
 import { CONFIGURATION } from '../../core/configuration/config';
 import { Helpers } from '../../core/services/helpers';
+import { AuthService } from '../../core/services/auth.service';
+import { Album } from '../../models/album';
+import { AlbumService } from '../../services/album.service';
 
 @Component({
   selector: 'app-album-view',
@@ -16,6 +19,7 @@ import { Helpers } from '../../core/services/helpers';
 })
 export class AlbumViewComponent implements OnInit {
   images: Image[] = [];
+  album?: Album;
   baseUrl = environment.apiUrl;
 
   currentPage: number = 1;
@@ -25,6 +29,8 @@ export class AlbumViewComponent implements OnInit {
   selectedFileUrl?: string | ArrayBuffer | null;
 
   imageService = inject(ImageService);
+  authService = inject(AuthService);
+  albumService = inject(AlbumService);
   route = inject(ActivatedRoute);
 
   albumId!: number;
@@ -36,7 +42,8 @@ export class AlbumViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.fetch();
+    this.fetchImages();
+    this.fetchAlbum();
   }
 
   onFileSelected(event: Event): void {
@@ -57,6 +64,10 @@ export class AlbumViewComponent implements OnInit {
     this.selectedFileUrl = null;
   }
 
+  canUpload() {
+    return this.authService.getUserId() === this.album?.userId;
+  }
+
   save() {
     if (this.selectedFile === null) {
       return;
@@ -71,25 +82,34 @@ export class AlbumViewComponent implements OnInit {
       next: () => {
         this.currentPage = 1;
         this.clearSelectedFile();
-        this.fetch();
+        this.fetchImages();
       }
     });
   }
 
   onPageChange(page: number) {
     this.currentPage = page;
-    this.fetch();
+    this.fetchImages();
   }
 
   totalPages(): number {
     return Helpers.totalPages(this.totalRecords, CONFIGURATION.album.pageSize);
   }
 
-  fetch() {
+  fetchImages() {
     this.imageService.getImages(this.albumId, this.currentPage).subscribe({
       next: (response) => {
         this.images = response.list;
         this.totalRecords = response.totalRecords;
+      }
+    });
+  }
+
+  fetchAlbum() {
+    this.albumService.getAlbum(this.albumId).subscribe({
+      next: (response) => {
+        this.album = response;
+        console.log(this.album)
       }
     });
   }

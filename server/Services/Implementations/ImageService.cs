@@ -28,9 +28,14 @@ class ImageService(IRepository _db) : IImageService
         return first;
     }
 
-    public async Task AddAsync(AddImageRequest model)
+    public async Task AddAsync(AddImageRequest model, int userId)
     {
         var album = await _db.GetByIdAsync<Album>(model.AlbumId) ?? throw new AlbumNotFoundException();
+
+        if (userId != album.UserId)
+        {
+            throw new UnauthorizedAccessException();
+        }
 
         if (model.File is null || model.File.Length is 0)
         {

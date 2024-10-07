@@ -1,4 +1,5 @@
 ﻿using Azure.Core;
+using Core.Constants;
 using Core.Contracts;
 using Core.Exceptions;
 using Core.Requests;
@@ -42,10 +43,13 @@ namespace Web.Controllers
         {
             try
             {
-                await _imageService.AddAsync(request);
+                var userId = HttpContext.User.Claims
+                    .FirstOrDefault(c => c.Type == Token.Id)?.Value ?? throw new UnauthorizedAccessException();
+
+                await _imageService.AddAsync(request, Convert.ToInt32(userId));
                 return Ok();
             }
-            catch (Exception ex) when (ex is AlbumNotFoundException or InvalidFileException)
+            catch (Exception ex) when (ex is AlbumNotFoundException or InvalidFileException or UnauthorizedAccessException)
             {
                 _logger.LogError(ex,
                     "Add request failed: file {file}, album id {id}",

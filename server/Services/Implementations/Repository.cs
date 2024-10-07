@@ -1,4 +1,6 @@
 ﻿using Core.Contracts;
+using Core.Entities;
+using Core.Exceptions;
 using Data.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
@@ -28,6 +30,18 @@ public class Repository(AppDbContext _context) : IRepository
     public async Task<T?> GetByIdAsync<T>(long id) where T : class
     {
         return await _context.Set<T>().FindAsync(id);
+    }
+
+    public async Task<T?> GetByIdAsync<T>(long id, params Expression<Func<T, object>>[] includes) where T : class
+    {
+        IQueryable<T> query = _context.Set<T>();
+
+        foreach (var include in includes)
+        {
+            query = query.Include(include);
+        }
+
+        return await query.FirstOrDefaultAsync(e => EF.Property<long>(e, "Id") == id);
     }
 
     public async Task<T?> FindAsync<T>(Expression<Func<T, bool>> predicate) where T : class

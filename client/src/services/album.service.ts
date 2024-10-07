@@ -22,6 +22,10 @@ export class AlbumService {
     return this.http.get<Paged<Album>>(`${this.baseUrl}?page=${page}&userId=${userId}`);
   }
 
+  getAlbum(id: number) : Observable<Album> {
+    return this.http.get<Album>(`${this.baseUrl}/${id}`);
+  }
+
   createAlbum(request: CreateAlbumRequest) {
     return this.http.post(`${this.baseUrl}/create`, request);
   }

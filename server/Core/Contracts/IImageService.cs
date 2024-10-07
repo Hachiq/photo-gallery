@@ -8,7 +8,7 @@ public interface IImageService
 {
     Task<PagedResponse<Image>> GetByAlbumIdAsync(int albumId, int page);
     Task<Image> GetFirstAsync(int albumId);
-    Task AddAsync(AddImageRequest model);
+    Task AddAsync(AddImageRequest model, int userId);
     Task DeleteAsync(int id);
     Task LikeAsync(LikeRequest request);
     Task DislikeAsync(LikeRequest request);

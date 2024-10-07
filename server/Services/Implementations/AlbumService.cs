@@ -33,7 +33,7 @@ class AlbumService(IRepository _db) : IAlbumService
 
     public async Task<Album> GetAlbumAsync(int albumId)
     {
-        var album = await _db.GetByIdAsync<Album>(albumId) ?? throw new AlbumNotFoundException();
+        var album = await _db.GetByIdAsync<Album>(albumId, a => a.Images) ?? throw new AlbumNotFoundException();
         return album;
     }
     public async Task<int> CreateAlbumAsync(CreateAlbumRequest model)

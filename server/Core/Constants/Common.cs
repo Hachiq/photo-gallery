@@ -2,5 +2,5 @@
 
 public static class Common
 {
-    public static int PageSize = 5;
+    public const int PageSize = 5;
 }
