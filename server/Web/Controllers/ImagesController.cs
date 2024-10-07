@@ -141,25 +141,7 @@ namespace Web.Controllers
             }
         }
 
-        [HttpPost("unlike")]
-        public async Task<IActionResult> Unlike(LikeRequest request)
-        {
-            try
-            {
-                await _imageService.UnlikeAsync(request);
-                return Ok();
-            }
-            catch (Exception ex) when (ex is ImageNotFoundException or UserNotFoundException)
-            {
-                _logger.LogError(ex,
-                    "Like request failed: image id {imageId}, user id {userId}",
-                    request.ImageId,
-                    request.UserId);
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpGet("reactions/{id}")]
+        [HttpGet("{id}/reactions")]
         public async Task<IActionResult> GetReactions([FromRoute] int id)
         {
             try

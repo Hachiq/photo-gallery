@@ -191,29 +191,6 @@ class ImageService(IRepository _db) : IImageService
         await _db.SaveChangesAsync();
     }
 
-    public async Task UnlikeAsync(LikeRequest request)
-    {
-        var image = await _db.GetByIdAsync<Image>(request.ImageId) ?? throw new ImageNotFoundException();
-        var user = await _db.GetByIdAsync<User>(request.UserId) ?? throw new UserNotFoundException();
-
-        var like = await _db.FindAsync<Like>(l => l.UserId == request.UserId && l.ImageId == request.ImageId) ?? throw new Exception();
-
-        if (like.IsLike)
-        {
-            image.LikeCount--;
-        }
-        else
-        {
-            image.DislikeCount--;
-        }
-        image.Likes.Remove(like);
-        user.Likes.Remove(like);
-
-        _db.Update(image);
-        _db.Delete(like);
-        await _db.SaveChangesAsync();
-    }
-
     public async Task<ReactionsResponse> GetReactionsAsync(int id)
     {
         var image = await _db.GetByIdAsync<Image>(id) ?? throw new ImageNotFoundException();

@@ -115,13 +115,25 @@ export class AlbumViewComponent implements OnInit {
     return this.authService.isAuthenticated();
   }
 
+  reloadReactions(id: number) {
+    this.imageService.getReactions(id).subscribe({
+      next: (response) => {
+        const image = this.images.find(img => img.id === id);
+        if (image) {
+          image.likeCount = response.likes;
+          image.dislikeCount = response.dislikes;
+        }
+      }
+    });
+  }
+
   onLike(image: Image, $event: MouseEvent) {
     $event.stopPropagation();
 
     if (this.canRate()) {
       this.imageService.like(image.id).subscribe({
         next: () => {
-          this.fetch(); // TODO: Consiger reloading only rates count
+          this.reloadReactions(image.id);
         }
       });
     }
@@ -133,7 +145,7 @@ export class AlbumViewComponent implements OnInit {
     if (this.canRate()) {
       this.imageService.dislike(image.id).subscribe({
         next: () => {
-          this.fetch(); // TODO: Consiger reloading only rates count
+          this.reloadReactions(image.id);
         }
       });
     }

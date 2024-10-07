@@ -7,6 +7,7 @@ import { Image } from '../models/image';
 import { AddImageRequest } from '../models/add-image.request';
 import { Paged } from '../models/paged.response';
 import { EmptyCollectionResponse } from '../models/empty-collection.response';
+import { Reactions } from '../models/reactions';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +35,10 @@ export class ImageService {
 
   dislike(imageId: number) {
     return this.http.post(`${this.baseUrl}/dislike`, imageId);
+  }
+
+  getReactions(imageId: number) : Observable<Reactions> {
+    return this.http.get<Reactions>(`${this.baseUrl}/${imageId}/reactions`);
   }
 
   getFirstImage(albumId: number) : Observable<Image | EmptyCollectionResponse> {

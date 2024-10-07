@@ -12,6 +12,5 @@ public interface IImageService
     Task DeleteAsync(int id);
     Task LikeAsync(LikeRequest request);
     Task DislikeAsync(LikeRequest request);
-    Task UnlikeAsync(LikeRequest request);
     Task<ReactionsResponse> GetReactionsAsync(int id);
 }
