@@ -138,6 +138,15 @@ body {
   }
 }
 
+.container {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 80%;
+  margin: 0 auto;
+}
+
 .pagination-controls {
   text-align: center;
   padding: 2rem;

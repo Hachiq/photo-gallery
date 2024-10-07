@@ -5,12 +5,3 @@
 .create-album {
   justify-self: center;
 }
-
-.album-container {
-  display: grid;
-  gap: 40px;
-  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-  justify-content: center;
-  max-width: 1200px;
-  margin: auto;
-}
