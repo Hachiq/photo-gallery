@@ -95,13 +95,34 @@ class ImageService(IRepository _db) : IImageService
             l.UserId == request.UserId &&
             l.ImageId == request.ImageId);
 
-        if (existingLike is not null)
+        var image = await _db.GetByIdAsync<Image>(request.ImageId) ?? throw new ImageNotFoundException();
+        var user = await _db.GetByIdAsync<User>(request.UserId) ?? throw new UserNotFoundException();
+
+        if (existingLike is not null && !existingLike.IsLike)
         {
+            image.LikeCount++;
+            image.DislikeCount--;
+            _db.Update(image);
+
+            existingLike.IsLike = true;
+            _db.Update(existingLike);
+
+            await _db.SaveChangesAsync();
+
             throw new AlreadyRatedException();
         }
 
-        var image = await _db.GetByIdAsync<Image>(request.ImageId) ?? throw new ImageNotFoundException();
-        var user = await _db.GetByIdAsync<User>(request.UserId) ?? throw new UserNotFoundException();
+        if (existingLike is not null && existingLike.IsLike)
+        {
+            image.LikeCount--;
+            image.Likes.Remove(existingLike);
+            _db.Update(image);
+
+            _db.Delete(existingLike);
+            await _db.SaveChangesAsync();
+
+            throw new AlreadyRatedException();
+        }
 
         var like = new Like
         {
@@ -125,13 +146,34 @@ class ImageService(IRepository _db) : IImageService
             l.UserId == request.UserId &&
             l.ImageId == request.ImageId);
 
-        if (existingLike is not null)
+        var image = await _db.GetByIdAsync<Image>(request.ImageId) ?? throw new ImageNotFoundException();
+        var user = await _db.GetByIdAsync<User>(request.UserId) ?? throw new UserNotFoundException();
+
+        if (existingLike is not null && existingLike.IsLike)
         {
+            image.LikeCount--;
+            image.DislikeCount++;
+            _db.Update(image);
+
+            existingLike.IsLike = false;
+            _db.Update(existingLike);
+
+            await _db.SaveChangesAsync();
+
             throw new AlreadyRatedException();
         }
 
-        var image = await _db.GetByIdAsync<Image>(request.ImageId) ?? throw new ImageNotFoundException();
-        var user = await _db.GetByIdAsync<User>(request.UserId) ?? throw new UserNotFoundException();
+        if (existingLike is not null && !existingLike.IsLike)
+        {
+            image.DislikeCount--;
+            image.Likes.Remove(existingLike);
+            _db.Update(image);
+
+            _db.Delete(existingLike);
+            await _db.SaveChangesAsync();
+
+            throw new AlreadyRatedException();
+        }
 
         var like = new Like
         {

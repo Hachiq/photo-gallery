@@ -119,7 +119,11 @@ export class AlbumViewComponent implements OnInit {
     $event.stopPropagation();
 
     if (this.canRate()) {
-      console.log('liked')
+      this.imageService.like(image.id).subscribe({
+        next: () => {
+          this.fetch(); // TODO: Consiger reloading only rates count
+        }
+      });
     }
   }
 
@@ -127,7 +131,11 @@ export class AlbumViewComponent implements OnInit {
     $event.stopPropagation();
 
     if (this.canRate()) {
-      console.log('disliked')
+      this.imageService.dislike(image.id).subscribe({
+        next: () => {
+          this.fetch(); // TODO: Consiger reloading only rates count
+        }
+      });
     }
   }
 

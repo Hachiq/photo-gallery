@@ -28,6 +28,14 @@ export class ImageService {
     return this.http.post(`${this.baseUrl}/add`, formData);
   }
 
+  like(imageId: number) {
+    return this.http.post(`${this.baseUrl}/like`, imageId);
+  }
+
+  dislike(imageId: number) {
+    return this.http.post(`${this.baseUrl}/dislike`, imageId);
+  }
+
   getFirstImage(albumId: number) : Observable<Image | EmptyCollectionResponse> {
     return this.http.get<Image | EmptyCollectionResponse>(`${this.baseUrl}/first?albumId=${albumId}`);
   }

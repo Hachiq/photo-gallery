@@ -76,45 +76,67 @@ namespace Web.Controllers
         }
 
         [HttpPost("like")]
-        public async Task<IActionResult> Like(LikeRequest request)
+        public async Task<IActionResult> Like([FromBody] int imageId)
         {
             try
             {
+                var userId = HttpContext.User.Claims
+                    .FirstOrDefault(c => c.Type == Token.Id)?.Value ?? throw new UnauthorizedAccessException();
+
+                var request = new LikeRequest(imageId, Convert.ToInt32(userId));
+
                 await _imageService.LikeAsync(request);
                 return Ok();
             }
-            catch (AlreadyRatedException ex)
+            catch (AlreadyRatedException)
             {
-                return Ok(ex.Message);
+                return Ok();
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                _logger.LogError(ex,
+                    "Like request failed: image id {image id}",
+                    imageId);
+                return Unauthorized(ex.Message);
             }
             catch (Exception ex) when (ex is ImageNotFoundException or UserNotFoundException)
             {
                 _logger.LogError(ex,
-                    "Like request failed: image id {imageId}, user id {userId}",
-                    request.ImageId,
-                    request.UserId);
+                    "Like request failed: image id {imageId}",
+                    imageId);
                 return BadRequest(ex.Message);
             }
         }
 
         [HttpPost("dislike")]
-        public async Task<IActionResult> Dislike(LikeRequest request)
+        public async Task<IActionResult> Dislike([FromBody] int imageId)
         {
             try
             {
+                var userId = HttpContext.User.Claims
+                    .FirstOrDefault(c => c.Type == Token.Id)?.Value ?? throw new UnauthorizedAccessException();
+
+                var request = new LikeRequest(imageId, Convert.ToInt32(userId));
+
                 await _imageService.DislikeAsync(request);
                 return Ok();
             }
-            catch (AlreadyRatedException ex)
+            catch (AlreadyRatedException)
             {
-                return Ok(ex.Message);
+                return Ok();
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                _logger.LogError(ex,
+                    "Dislike request failed: image id {image id}",
+                    imageId);
+                return Unauthorized(ex.Message);
             }
             catch (Exception ex) when (ex is ImageNotFoundException or UserNotFoundException)
             {
                 _logger.LogError(ex,
-                    "Like request failed: image id {imageId}, user id {userId}",
-                    request.ImageId,
-                    request.UserId);
+                    "Dislike request failed: image id {imageId}",
+                    imageId);
                 return BadRequest(ex.Message);
             }
         }
