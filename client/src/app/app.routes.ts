@@ -11,7 +11,13 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent, canActivate: [UnauthorizedGuard] },
   { path: 'login', component: LoginComponent, canActivate: [UnauthorizedGuard] },
   { path: 'album/:id', component: AlbumViewComponent },
-  { path: 'albums', component: AlbumsTableComponent },
-  { path: 'albums/:id', component: MyAlbumsComponent, canActivate: [AuthGuard, UserGuard] },
+  { 
+    path: 'albums',
+    children: [
+      { path: 'all', component: AlbumsTableComponent },
+      { path: ':id', component: MyAlbumsComponent, canActivate: [AuthGuard, UserGuard] },
+      { path: '', component: AlbumsTableComponent }
+    ]
+  },
   { path: '', component: AlbumsTableComponent },
 ];

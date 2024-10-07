@@ -14,7 +14,7 @@ export const UserGuard: CanActivateFn = (route: ActivatedRouteSnapshot) => {
   if (currentUser.id === userId || currentUser.role === CONFIGURATION.roles.admin) {
     return true;
   } else {
-    router.navigate(['albums']);
+    router.navigate(['albums/all']);
     return false;
   }
 };

@@ -9,7 +9,7 @@ export const AuthGuard: CanActivateFn = () => {
   if (authService.isAuthenticated()){
     return true;
   } else {
-    router.navigate(['albums'])
+    router.navigate(['albums/all'])
     return false;
   }
 };
@@ -21,7 +21,7 @@ export const UnauthorizedGuard: CanActivateFn = () => {
   if (!authService.isAuthenticated()){
     return true;
   } else {
-    router.navigate(['albums'])
+    router.navigate(['albums/all'])
     return false;
   }
 };
