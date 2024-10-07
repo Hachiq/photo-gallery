@@ -9,15 +9,21 @@ import { Helpers } from '../../core/services/helpers';
 import { AuthService } from '../../core/services/auth.service';
 import { Album } from '../../models/album';
 import { AlbumService } from '../../services/album.service';
+import { faThumbsDown, faThumbsUp, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'app-album-view',
   standalone: true,
-  imports: [],
+  imports: [FontAwesomeModule],
   templateUrl: './album-view.component.html',
   styleUrl: './album-view.component.scss'
 })
 export class AlbumViewComponent implements OnInit {
+  ilike = faThumbsUp;
+  idislike = faThumbsDown;
+  itrash = faTrashCan;
+  
   images: Image[] = [];
   album?: Album;
   baseUrl = environment.apiUrl;
@@ -94,7 +100,7 @@ export class AlbumViewComponent implements OnInit {
   totalPages(): number {
     return Helpers.totalPages(this.totalRecords, CONFIGURATION.album.pageSize);
   }
-  
+
   fetchAlbum() {
     this.albumService.getAlbum(this.albumId, this.currentPage).subscribe({
       next: (response) => {
@@ -103,5 +109,27 @@ export class AlbumViewComponent implements OnInit {
         this.totalRecords = response.images.totalRecords;
       }
     });
+  }
+
+  canRate(): boolean {
+    return true;
+  }
+
+  onLike($event: MouseEvent) {
+    $event.stopPropagation();
+    console.log('liked')
+  }
+
+  onDislike($event: MouseEvent) {
+    $event.stopPropagation();
+    console.log('disliked')
+  }
+
+  canDelete(): boolean {
+    return true;
+  }
+
+  onDelete() {
+    console.log('deleted')
   }
 }

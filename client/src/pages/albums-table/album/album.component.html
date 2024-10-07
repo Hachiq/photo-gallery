@@ -9,6 +9,13 @@
         <span>(empty)</span>
       }
     </div>
+    @if (canDelete()) {
+      <div class="delete" (click)="onDelete($event)">
+        <button class="btn">
+          <fa-icon [icon]="itrash"></fa-icon>
+        </button>
+      </div>
+    }
   </div>
   <div class="backdrop-item"></div>
 </div>

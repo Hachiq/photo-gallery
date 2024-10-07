@@ -5,15 +5,19 @@ import { ImageService } from '../../../services/image.service';
 import { Image } from '../../../models/image';
 import { RouterModule } from '@angular/router';
 import { EmptyCollectionResponse } from '../../../models/empty-collection.response';
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'app-album',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, FontAwesomeModule],
   templateUrl: './album.component.html',
   styleUrl: './album.component.scss'
 })
 export class AlbumComponent implements OnInit {
+  itrash = faTrashCan;
+
   baseUrl = environment.apiUrl;
 
   @Input() item!: Album;
@@ -40,5 +44,14 @@ export class AlbumComponent implements OnInit {
 
   isEmptyCollection(response: Image | EmptyCollectionResponse): response is EmptyCollectionResponse {
     return (response as EmptyCollectionResponse).isEmpty !== undefined;
+  }
+
+  canDelete(): boolean {
+    return true;
+  }
+
+  onDelete($event: MouseEvent) {
+    $event.stopPropagation();
+    console.log('deleted')
   }
 }

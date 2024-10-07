@@ -21,6 +21,23 @@
     @for (item of images; track $index) {
       <div class="image-item">
         <img [src]="baseUrl + '/' + item.relativePath" alt="Image {{ $index }}">
+        @if (canRate()) {
+          <div class="rates">
+            <button class="btn" (click)="onLike($event)">
+              <fa-icon [icon]="ilike"></fa-icon>
+            </button>
+            <button class="btn" (click)="onDislike($event)">
+              <fa-icon [icon]="idislike"></fa-icon>
+            </button>
+          </div>
+        }
+        @if (canDelete()) {
+          <div class="delete" (click)="onDelete()">
+            <button class="btn">
+              <fa-icon [icon]="itrash"></fa-icon>
+            </button>
+          </div>
+        }
       </div>
     }
   </div>

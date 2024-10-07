@@ -53,3 +53,22 @@
   font-style: italic;
   color: var(--primary);
 }
+
+.delete {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  font-size: 24px;
+  color: var(--warning);
+
+  .btn {
+    fa-icon {
+      opacity: .7;
+      transition: opacity .2s;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+}

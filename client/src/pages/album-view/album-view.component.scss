@@ -65,3 +65,43 @@
   height: 100%;
   object-fit: cover;
 }
+
+.rates {
+  position: absolute;
+  display: flex;
+  gap: 10px;
+  bottom: 20px;
+  left: 20px;
+  font-size: 24px;
+  color: var(--primary);
+
+  .btn {
+    fa-icon {
+      opacity: .7;
+      transition: opacity .2s;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.delete {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  font-size: 24px;
+  color: var(--warning);
+
+  .btn {
+    fa-icon {
+      opacity: .7;
+      transition: opacity .2s;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+}
