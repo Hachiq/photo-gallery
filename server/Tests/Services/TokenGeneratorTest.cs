@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using Moq;
 using Services.Implementations;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
 
 namespace Tests.Services;
@@ -41,7 +42,8 @@ public class TokenGeneratorTests
         {
             Username = "testuser",
             PasswordHash = passwordHash,
-            PasswordSalt = passwordSalt
+            PasswordSalt = passwordSalt,
+            Role = Core.Enums.Role.User
         };
 
         // Act
@@ -59,11 +61,13 @@ public class TokenGeneratorTests
         Assert.Equal(_jwtSettings.Audience, jwtToken.Audiences.First());
 
         // Validate the claims
-        var idClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == "id")?.Value;
-        var nameClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Name)?.Value;
+        var idClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+        var nameClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
+        var roleClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
 
         Assert.Equal(user.Id.ToString(), idClaim);
         Assert.Equal(user.Username, nameClaim);
+        Assert.Equal(user.Role.ToString(), roleClaim);
 
         // Check the token expiration time
         Assert.True(jwtToken.ValidTo > DateTime.UtcNow);
